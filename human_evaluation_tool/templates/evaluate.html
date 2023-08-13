@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+{% if annotation %}
+
+    <div class="col-md-12 card bg-primary-subtle mb-3">
+        <div class="card-header">Claim</div>
+        <div class="card-body">
+            <p class="card-text">{{annotation.instance.claim}}</p>
+        </div>
+    </div>
+    <div class="col-md-12 card bg-secondary-subtle mb-3">
+        <div class="card-header">Explanation</div>
+        <div class="card-body">
+            <p class="card-text">{{annotation.instance.explanation}}</p>
+        </div>
+    </div>    
+    
+    <form id="evaluate_form" class="row g-3" method="post">
+        {% csrf_token %}
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="claim_repetition" class="form-label">Claim repetition</label>
+            <select name="claim_repetition" id="claim_repetition" class="form-select" required>
+                <option selected>Choose...</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="claim_repetition_comment" class="form-label">Comment</label>
+            <textarea name="claim_repetition_comment" class="form-control" id="claim_repetition_comment" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label for="internal_repetition" class="form-label">Internal repetition</label>
+            <select id="internal_repetition" name="internal_repetition" class="form-select" required>
+                <option selected>Choose...</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="internal_repetition_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="internal_repetition_comment" name="internal_repetition_comment" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="suggested_class" class="form-label">Suggested class</label>
+            <select id="suggested_class" name="suggested_class" class="form-select">
+                <option selected>Choose...</option>
+                {% for title,val in FACT_CHECKING_CLASSES %}
+                    <option value="{{val}}">{{title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="suggested_class_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="suggested_class_comment" name="suggested_class_comment" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label for="internal_consistency" class="form-label">Internal consistency</label>
+            <select id="internal_consistency" name="internal_consistency" class="form-select">
+                <option selected>Choose...</option>
+                {% for title,val in INTERNAL_CONSISTENCY_RATING %}
+                    <option value="{{val}}">{{title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="internal_consistency_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="internal_consistency_comment" name="internal_consistency_comment" rows="2"></textarea>
+        </div>
+        
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="fluency" class="form-label">Fluency</label>
+            <select id="fluency" name="fluency" class="form-select" required="True">
+                <option selected>Choose...</option>
+                {% for title,val in FLUENCY_RATING %}
+                    <option value="{{val}}">{{title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="fluency_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="fluency_comment" name="fluency_comment" rows="2"></textarea>
+        </div>    
+        <hr/>
+        <p class="d-inline-flex gap-1">
+            <button class="btn btn-primary collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#main_context_holder" aria-expanded="false" aria-controls="main_context_holder">
+                Show/Hide the Main Context & the Explanation 
+            </button>
+        </p>
+        <div class="collapse" id="main_context_holder">
+            <div class="col-md-8 mb-3 mb-sm-0 d-inline-block">
+                <div class="card bg-primary-subtle mb-3">
+                    <div class="card-header">Context</div>
+                    <div class="card-body">
+                        <p class="card-text">{{annotation.instance.context}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-inline-block">
+                <div class="card bg-primary-subtle mb-3">
+                    <div class="card-header">Explanation</div>
+                    <div class="card-body">
+                        <p class="card-text">{{annotation.instance.explanation}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="external_consistency" class="form-label">External consistency</label>
+            <select id="external_consistency" name="external_consistency" class="form-select">
+                <option selected>Choose...</option>
+                {% for title,val in EXTERNAL_CONSISTENCY_RATING %}
+                    <option value="{{val}}">{{title}}</option>
+                {% endfor %}                
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="external_consistency_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="external_consistency_comment" name="external_consistency_comment" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="extra_information" class="form-label">Extra information</label>
+            <select id="extra_information" name="extra_information" class="form-select">
+                <option selected>Choose...</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-6 bg-dark-subtle pb-1">
+            <label for="extra_information_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="extra_information_comment" name="extra_information_comment" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label for="missing_information" class="form-label">Missing information</label>
+            <select id="missing_information" name="missing_information" class="form-select">
+                <option selected>Choose...</option>
+                {% for title,val in MISSING_INFORMATION_RATING %}
+                    <option value="{{val}}">{{title}}</option>
+                {% endfor %}                                
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="missing_information_comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="missing_information_comment" name="missing_information_comment" rows="2"></textarea>
+        </div>
+
+        <div id="errorMessageContainer" class="alert alert-danger d-none">
+            <div id="errorMessage">
+
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" style="min-width: 130px;" type="button" onclick="save_annotation({{annotation.id}}, this)">
+                <span id="loading" class="spinner-grow spinner-grow-sm d-none" aria-hidden="true"></span>
+                <span id="btn_save" role="status">Save</span>
+              </button>
+        </div>
+    </form>
+
+{% else %}
+    <div class="alert alert-danger">There is no sample to evaluate!</div>
+{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+    function save_annotation(annotation_id, this_btn) {
+        $("#errorMessageContainer").addClass("d-none")
+        $("#loading").removeClass("d-none")
+        $("#btn_save").text("Saving...")
+        $(this_btn).prop('disabled', true);
+        $.ajax({
+            type: "POST",
+            url: "/"+annotation_id + "/save_annotation/'",
+            data: $("#evaluate_form").serialize(),
+            success: function (data) {
+                $("#loading").addClass("d-none");
+                $("#btn_save").text("Save")
+                $(this_btn).prop('disabled', false);
+                
+                if (data.success == false){
+                    message = "<ul>";
+                    $.each(data.error_message, function(key, value) {
+                        message += "<li>" + key + ": " + value + "</li>";
+                    });
+                    message += "</ul>";
+
+                    $("#errorMessage").html(message)
+                    $("#errorMessageContainer").removeClass("d-none")
+                }
+                else{
+                    $("#errorMessage").html("")
+                    $("#errorMessageContainer").addClass("d-none")
+                    window.location.replace("/evaluate/");
+                }
+            },
+
+            failure: function () {
+                $("#errorMessage").html("There is an error!")
+                $("#errorMessageContainer").removeClass("d-none")
+                $("#loading").addClass("d-none")
+                $("#btn_save").text("Save")
+                $(this_btn).prop('disabled', false);
+            }
+        });
+    }
+</script>
+
+{% endblock %}

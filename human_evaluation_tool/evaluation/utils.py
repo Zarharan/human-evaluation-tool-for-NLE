@@ -1,0 +1,5 @@
+FACT_CHECKING_CLASSES = [(0, 'False'), (1, 'True'), (2, 'Mixture'), (3, 'Unproven')]
+FLUENCY_RATING = [(1, 'Incomprehensible'), (2, 'Disfluent English'), (3, 'None-native English'), (4, 'Good English'), (5, 'Flawless English')]
+CONSISTENCY_RATING = [(1, 'Highly inconsistent (full of inconsistencies)'), (2, 'Mostly inconsistent'), (3, 'Some inconsistencies'), (4, 'Mostly consistent'), (5, 'Highly consistent (no inconsistencies)')]
+MISSING_INFORMATION_RATING = [(0, 'Crucial information is missing'), (1, 'Some minor detail is missing'), (2, 'The explanation contains all the information needed')]
+YES_NO_CHOICES = [(0, 'No'), (1, 'Yes')]

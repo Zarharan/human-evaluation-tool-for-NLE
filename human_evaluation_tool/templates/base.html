@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.1-dist/css/bootstrap.css'%}" />
+    <script src="{% static 'js/jquery-3.7.0.min.js'%}"></script>
+    <script src="{% static 'bootstrap-5.3.1-dist/js/bootstrap.min.js'%}"></script>
+</head>
+
+<body ng-app="annotate">
+    <div class="container">
+        <div class="row maincontent">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">NLE Human Evaluation Tool</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'evaluate'%}">Evaluate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'evaluate'%}">My Evaluations</a>
+                </li>
+              </ul>
+
+            {% block main %}
+            {% endblock %}
+        </div>
+    </div>
+
+    {% block javascript %}
+    {% endblock %}
+</body>
+
+</html>
