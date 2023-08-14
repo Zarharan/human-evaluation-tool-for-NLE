@@ -44,5 +44,37 @@ class Annotation(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def suggested_class_label(self):
+        return FACT_CHECKING_CLASSES[self.suggested_class][1]
+
+    @property
+    def fluency_label(self):
+        return FLUENCY_RATING[self.fluency][1]
+
+    @property
+    def internal_consistency_label(self):
+        return CONSISTENCY_RATING[self.internal_consistency][1]
+
+    @property
+    def external_consistency_label(self):
+        return CONSISTENCY_RATING[self.external_consistency][1]
+
+    @property
+    def extra_information_label(self):
+        return YES_NO_CHOICES[self.extra_information][1]
+
+    @property
+    def missing_information_label(self):
+        return MISSING_INFORMATION_RATING[self.missing_information][1]
+
+    @property
+    def internal_repetition_label(self):
+        return YES_NO_CHOICES[self.internal_repetition][1]
+
+    @property
+    def claim_repetition_label(self):
+        return YES_NO_CHOICES[self.claim_repetition][1]
+
     class Meta:
         unique_together = (("instance", "user"),)
