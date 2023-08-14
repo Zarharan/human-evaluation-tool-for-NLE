@@ -24,7 +24,18 @@
         </thead>
         <tbody>
             {% for item in annotation_list%}
-                <tr data-bs-explanation="{{item.instance.explanation}}" data-bs-claim="{{item.instance.claim}}" data-bs-context="{{item.instance.context}}" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#detailModal">
+                <tr data-bs-explanation="{{item.instance.explanation}}" 
+                    data-bs-claim="{{item.instance.claim}}"
+                    data-bs-context="{{item.instance.context}}"
+                    data-bs-claim_repetition_comment="{{item.claim_repetition_comment}}"
+                    data-bs-internal_repetition_comment="{{item.internal_repetition_comment}}"
+                    data-bs-suggested_class_comment="{{item.suggested_class_comment}}"
+                    data-bs-internal_consistency_comment="{{item.internal_consistency_comment}}"
+                    data-bs-fluency_comment="{{item.fluency_comment}}"
+                    data-bs-external_consistency_comment="{{item.external_consistency_comment}}"
+                    data-bs-extra_information_comment="{{item.extra_information_comment}}"
+                    data-bs-missing_information_comment="{{item.missing_information_comment}}"
+                    style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#detailModal">
                     <td data-bs-placement="top" data-bs-toggle="tooltip" data-bs-title="{{item.instance.claim}}" class="text-truncate" style="max-width: 200px">{{item.instance.claim}}
                     </td>
                     <td>{{item.claim_repetition_label}}</td>
@@ -48,10 +59,77 @@
     <div class=" modal-xl modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5" id="detailModalLabel">Full text of the claim, the context, and explanation</h1>
+            <h1 class="modal-title fs-5" id="detailModalLabel">Your comments, full text of the claim, the context, and explanation</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for claim repetition</div>
+                        <div class="card-body">
+                            <p class="card-text" id="claim_repetition_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for internal repetition</div>
+                        <div class="card-body">
+                            <p class="card-text" id="internal_repetition_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for suggested class</div>
+                        <div class="card-body">
+                            <p class="card-text" id="suggested_class_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for internal consistency</div>
+                        <div class="card-body">
+                            <p class="card-text" id="internal_consistency_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for fluency</div>
+                        <div class="card-body">
+                            <p class="card-text" id="fluency_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for external consistency</div>
+                        <div class="card-body">
+                            <p class="card-text" id="external_consistency_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for extra information</div>
+                        <div class="card-body">
+                            <p class="card-text" id="extra_information_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Your comment for missing information</div>
+                        <div class="card-body">
+                            <p class="card-text" id="missing_information_commentContainer"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12 card bg-primary-subtle mb-3">
                     <div class="card-header">Claim</div>
@@ -69,11 +147,11 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-md-4">
-                <div class="card bg-secondary-subtle mb-3">
-                    <div class="card-header">Explanation</div>
-                    <div class="card-body">
-                        <p class="card-text" id="explanationContainer"></p>
+                <div class="col-md-4">
+                    <div class="card bg-secondary-subtle mb-3">
+                        <div class="card-header">Explanation</div>
+                        <div class="card-body">
+                            <p class="card-text" id="explanationContainer"></p>
                     </div>
                 </div>
             </div>
@@ -110,13 +188,29 @@
             const claim = target_row.getAttribute('data-bs-claim')
             const context = target_row.getAttribute('data-bs-context')
             const explanation = target_row.getAttribute('data-bs-explanation')
-            
+            const claim_repetition_comment = target_row.getAttribute('data-bs-claim_repetition_comment')
+            const internal_repetition_comment = target_row.getAttribute('data-bs-internal_repetition_comment')
+            const internal_consistency_comment = target_row.getAttribute('data-bs-internal_consistency_comment')
+            const suggested_class_comment = target_row.getAttribute('data-bs-suggested_class_comment')
+            const fluency_comment = target_row.getAttribute('data-bs-fluency_comment')
+            const external_consistency_comment = target_row.getAttribute('data-bs-external_consistency_comment')
+            const extra_information_comment = target_row.getAttribute('data-bs-extra_information_comment')
+            const missing_information_comment = target_row.getAttribute('data-bs-missing_information_comment')
+
             // Update the modal's content.
             $("#claimContainer").text(claim);
             $("#contextContainer").text(context);
             $("#explanationContainer").text(explanation);
-        })
-    }    
+            $("#claim_repetition_commentContainer").text(claim_repetition_comment);
+            $("#internal_repetition_commentContainer").text(internal_repetition_comment);
+            $("#internal_consistency_commentContainer").text(internal_consistency_comment);
+            $("#suggested_class_commentContainer").text(suggested_class_comment);
+            $("#fluency_commentContainer").text(fluency_comment);
+            $("#external_consistency_commentContainer").text(external_consistency_comment);
+            $("#extra_information_commentContainer").text(extra_information_comment);
+            $("#missing_information_commentContainer").text(missing_information_comment);
+        });
+    }
 
 </script>
 
