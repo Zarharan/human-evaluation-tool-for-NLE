@@ -17,7 +17,6 @@ def index(request):
 def evaluate(request, annotation_id= None):
 
     context = {'FACT_CHECKING_CLASSES': zip([item[1] for item in FACT_CHECKING_CLASSES], [item[0] for item in FACT_CHECKING_CLASSES])
-        ,'FLUENCY_RATING': zip([item[1] for item in FLUENCY_RATING], [item[0] for item in FLUENCY_RATING])
         ,'INTERNAL_CONSISTENCY_RATING': zip([item[1] for item in CONSISTENCY_RATING], [item[0] for item in CONSISTENCY_RATING])
         ,'EXTERNAL_CONSISTENCY_RATING': zip([item[1] for item in CONSISTENCY_RATING], [item[0] for item in CONSISTENCY_RATING])
         ,'MISSING_INFORMATION_RATING': zip([item[1] for item in MISSING_INFORMATION_RATING], [item[0] for item in MISSING_INFORMATION_RATING])}
@@ -81,9 +80,5 @@ def save_annotation(request, annotation_id):
 def evaluation_list(request):
 
     annotation_list = Annotation.objects.filter(user= request.user, annotated= True).select_related().all()
-
-    print("annotation_list.count(): ", annotation_list.count())
-    for item in annotation_list:
-        print("item.fluency: ", item.fluency)
     context = {"annotation_list": annotation_list}
     return render(request, 'annotation_list.html', context)

@@ -72,20 +72,6 @@
             <label for="internal_consistency_comment" class="form-label">Comment</label>
             <textarea class="form-control" id="internal_consistency_comment" name="internal_consistency_comment" rows="2">{% if annotation.suggested_class_comment != None %}{{annotation.internal_consistency_comment}}{% endif %}</textarea>
         </div>
-        
-        <div class="col-md-6 bg-dark-subtle pb-1">
-            <label for="fluency" class="form-label">Fluency</label>
-            <select id="fluency" name="fluency" class="form-select">
-                <option>Choose...</option>
-                {% for title,val in FLUENCY_RATING %}
-                    <option {% if annotation.fluency == val %}selected{% endif %} value="{{val}}">{{title}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-6 bg-dark-subtle pb-1">
-            <label for="fluency_comment" class="form-label">Comment</label>
-            <textarea class="form-control" id="fluency_comment" name="fluency_comment" rows="2">{% if annotation.suggested_class_comment != None %}{{annotation.fluency_comment}}{% endif %}</textarea>
-        </div>    
         <hr/>
         <p class="d-inline-flex gap-1">
             <button class="btn btn-primary collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#main_context_holder" aria-expanded="false" aria-controls="main_context_holder">

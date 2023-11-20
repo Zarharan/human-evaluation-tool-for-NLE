@@ -19,7 +19,6 @@ class Instance(models.Model):
 class Annotation(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     suggested_class = models.IntegerField(choices=FACT_CHECKING_CLASSES, null=True)
-    fluency = models.IntegerField(choices=FLUENCY_RATING, null=True)
     internal_consistency = models.IntegerField(choices=CONSISTENCY_RATING, null=True)
     external_consistency = models.IntegerField(choices=CONSISTENCY_RATING, null=True)
     extra_information = models.IntegerField(choices=YES_NO_CHOICES, null=True)
@@ -29,7 +28,6 @@ class Annotation(models.Model):
     register_date = models.DateTimeField(auto_now_add=True)
 
     suggested_class_comment = models.TextField(null=True, blank=True)
-    fluency_comment = models.TextField(null=True, blank=True)
     internal_consistency_comment = models.TextField(null=True, blank=True)
     external_consistency_comment = models.TextField(null=True, blank=True)
     extra_information_comment = models.TextField(null=True, blank=True)
@@ -47,10 +45,6 @@ class Annotation(models.Model):
     @property
     def suggested_class_label(self):
         return FACT_CHECKING_CLASSES[self.suggested_class][1]
-
-    @property
-    def fluency_label(self):
-        return FLUENCY_RATING[self.fluency][1]
 
     @property
     def internal_consistency_label(self):

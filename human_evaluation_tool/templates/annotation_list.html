@@ -14,7 +14,6 @@
             <th scope="col">Internal Repetition</th>            
             <th scope="col">Suggested Class</th>
             <th scope="col">Internal Consistency</th>
-            <th scope="col">Fluency</th>
             <th scope="col">External Consistency</th>
             <th scope="col">Extra Information</th>
             <th scope="col">Missing Information</th>
@@ -31,7 +30,6 @@
                     data-bs-internal_repetition_comment="{{item.internal_repetition_comment}}"
                     data-bs-suggested_class_comment="{{item.suggested_class_comment}}"
                     data-bs-internal_consistency_comment="{{item.internal_consistency_comment}}"
-                    data-bs-fluency_comment="{{item.fluency_comment}}"
                     data-bs-external_consistency_comment="{{item.external_consistency_comment}}"
                     data-bs-extra_information_comment="{{item.extra_information_comment}}"
                     data-bs-missing_information_comment="{{item.missing_information_comment}}"
@@ -42,7 +40,6 @@
                     <td>{{item.internal_repetition_label}}</td>
                     <td>{{item.suggested_class_label}}</td>
                     <td>{{item.internal_consistency_label}}</td>
-                    <td>{{item.fluency_label}}</td>
                     <td>{{item.external_consistency_label}}</td>
                     <td>{{item.extra_information_label}}</td>
                     <td>{{item.missing_information_label}}</td>
@@ -94,14 +91,6 @@
                         <div class="card-header">Your comment for internal consistency</div>
                         <div class="card-body">
                             <p class="card-text" id="internal_consistency_commentContainer"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-secondary-subtle mb-3">
-                        <div class="card-header">Your comment for fluency</div>
-                        <div class="card-body">
-                            <p class="card-text" id="fluency_commentContainer"></p>
                         </div>
                     </div>
                 </div>
@@ -192,7 +181,6 @@
             const internal_repetition_comment = target_row.getAttribute('data-bs-internal_repetition_comment')
             const internal_consistency_comment = target_row.getAttribute('data-bs-internal_consistency_comment')
             const suggested_class_comment = target_row.getAttribute('data-bs-suggested_class_comment')
-            const fluency_comment = target_row.getAttribute('data-bs-fluency_comment')
             const external_consistency_comment = target_row.getAttribute('data-bs-external_consistency_comment')
             const extra_information_comment = target_row.getAttribute('data-bs-extra_information_comment')
             const missing_information_comment = target_row.getAttribute('data-bs-missing_information_comment')
@@ -205,7 +193,6 @@
             $("#internal_repetition_commentContainer").text(internal_repetition_comment);
             $("#internal_consistency_commentContainer").text(internal_consistency_comment);
             $("#suggested_class_commentContainer").text(suggested_class_comment);
-            $("#fluency_commentContainer").text(fluency_comment);
             $("#external_consistency_commentContainer").text(external_consistency_comment);
             $("#extra_information_commentContainer").text(extra_information_comment);
             $("#missing_information_commentContainer").text(missing_information_comment);
