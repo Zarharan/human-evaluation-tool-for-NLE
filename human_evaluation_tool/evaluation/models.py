@@ -9,7 +9,7 @@ class Instance(models.Model):
     claim = models.TextField()
     context = models.TextField()
     explanation = models.TextField()
-    tag = models.CharField(max_length=50)
+    tag = models.CharField(max_length=512)
     register_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

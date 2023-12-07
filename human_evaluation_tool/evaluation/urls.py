@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:annotation_id>/evaluate/", views.evaluate, name="evaluate"),
     path("evaluation_list/", views.evaluation_list, name="evaluation_list"),
     path("<int:annotation_id>/save_annotation/'", views.save_annotation, name="save_annotation"),
+    path("import_data_to_db/", views.import_data_to_db, name="import_data_to_db"),
 ]

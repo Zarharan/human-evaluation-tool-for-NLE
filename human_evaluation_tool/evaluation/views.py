@@ -6,6 +6,9 @@ from django.http import JsonResponse
 from .models import *
 from .forms import *
 from .utils import *
+from django.conf import settings
+from .import_data import *
+import random
 
 
 def index(request):
@@ -43,8 +46,13 @@ def evaluate(request, annotation_id= None):
         context['annotation']= target_annotation
         return render(request, 'evaluate.html', context)
 
-    annotated_ids= Annotation.objects.filter(user= request.user, annotated=True).values('instance_id')
-    new_instance = Instance.objects.exclude(id__in=annotated_ids).first()
+    if settings.DO_OVERLAP:
+        annotated_ids= Annotation.objects.filter(user= request.user, annotated=True).values('instance_id')
+    else:
+        annotated_ids= Annotation.objects.filter(user_id__isnull=False, annotated__isnull=False).values('instance_id')
+
+    random_id = random.choice(Instance.objects.exclude(id__in=annotated_ids).values('id'))
+    new_instance = Instance.objects.get(id= random_id["id"])
 
     # If there is no sample to evaluate, return the template and show an appropriate message on the client-side
     if new_instance == None:
@@ -78,7 +86,17 @@ def save_annotation(request, annotation_id):
 
 @login_required
 def evaluation_list(request):
-
     annotation_list = Annotation.objects.filter(user= request.user, annotated= True).select_related().all()
     context = {"annotation_list": annotation_list}
     return render(request, 'annotation_list.html', context)
+
+
+@login_required
+def import_data_to_db(request):
+    message = "The importation of data was done successfully."
+    try:
+        import_data()
+    except Exception as err:
+        message= f"Unexpected error: {err}, type: {type(err)}"
+    
+    return HttpResponse(message)
