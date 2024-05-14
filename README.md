@@ -13,7 +13,7 @@ git clone [repo URL]
 
 cd human-evaluation-tool-for-NLE
 
-pip install requirements.txt
+pip install -r requirements.txt
 
 cd human_evaluation_tool
 
