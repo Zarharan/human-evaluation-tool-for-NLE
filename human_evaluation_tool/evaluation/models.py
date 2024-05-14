@@ -52,15 +52,21 @@ class Annotation(models.Model):
 
     @property
     def external_consistency_label(self):
-        return CONSISTENCY_RATING[self.external_consistency][1]
+        if self.external_consistency is not None:
+            return CONSISTENCY_RATING[self.external_consistency][1]
+        return ""
 
     @property
     def extra_information_label(self):
-        return YES_NO_CHOICES[self.extra_information][1]
+        if self.extra_information is not None:
+            return YES_NO_CHOICES[self.extra_information][1]
+        return ""
 
     @property
     def missing_information_label(self):
-        return MISSING_INFORMATION_RATING[self.missing_information][1]
+        if self.missing_information is not None:
+            return MISSING_INFORMATION_RATING[self.missing_information][1]
+        return ""
 
     @property
     def internal_repetition_label(self):

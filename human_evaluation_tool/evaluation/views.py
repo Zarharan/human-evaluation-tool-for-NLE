@@ -9,6 +9,15 @@ from .utils import *
 from django.conf import settings
 from .import_data import *
 import random
+from django.db.models import Count
+from sklearn.metrics import mean_squared_error 
+import json
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, precision_score, recall_score
+from collections import defaultdict
+from django.db.models import Q
+import pandas as pd
+from pathlib import Path
+from django.db.models.functions import Length
 
 
 def index(request):
@@ -51,11 +60,13 @@ def evaluate(request, annotation_id= None):
     else:
         annotated_ids= Annotation.objects.filter(user_id__isnull=False, annotated__isnull=False).values('instance_id')
 
-    random_id = random.choice(Instance.objects.exclude(id__in=annotated_ids).values('id'))
-    new_instance = Instance.objects.get(id= random_id["id"])
+    lst_available_ids= Instance.objects.exclude(id__in=annotated_ids).values('id')
+    if lst_available_ids.count()>0:
+        random_id = random.choice(lst_available_ids)
+        new_instance = Instance.objects.get(id= random_id["id"])
 
     # If there is no sample to evaluate, return the template and show an appropriate message on the client-side
-    if new_instance == None:
+    else:
         context["error_message"]= "There is no sample to evaluate!"
         return render(request, 'evaluate.html', context)
 
@@ -90,13 +101,3 @@ def evaluation_list(request):
     context = {"annotation_list": annotation_list}
     return render(request, 'annotation_list.html', context)
 
-
-@login_required
-def import_data_to_db(request):
-    message = "The importation of data was done successfully."
-    try:
-        import_data()
-    except Exception as err:
-        message= f"Unexpected error: {err}, type: {type(err)}"
-    
-    return HttpResponse(message)
